@@ -1,5 +1,6 @@
 import User from '../models/auth.model.js';
 import bcryptjs from 'bcryptjs';
+import generateTokenAndSetCookie from '../utils/generateToken.js';
 
 export const signup =async (req, res) =>{
     try {
@@ -31,6 +32,8 @@ export const signup =async (req, res) =>{
         await newUser.save();
 
         if(newUser){
+            //generate token and set cookie
+            generateTokenAndSetCookie(newUser._id,res);
             res.status(201).json({
                 _id: newUser._id,
                 fullname: newUser.fullname,
@@ -50,9 +53,29 @@ export const signup =async (req, res) =>{
 
 };
 
-export const login = (req, res) =>{
-    console.log('Login user');
-    alert('Login user');
+export const login = async (req, res) =>{
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
+        const isCorrectPassword = await bcryptjs.compare(password, user?.password || "");
+        
+        if(!user ||!isCorrectPassword){
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+        
+        //generate token and set cookie
+        generateTokenAndSetCookie(user._id,res);
+        res.json({
+            _id: user._id,
+            fullname: user.fullname,
+            username: user.username,
+            profilePic: user.profilePic
+        });
+        
+        
+    } catch (error) {
+        
+    }
 
 };
 
