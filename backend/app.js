@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 });
 
 //auth routes
-app.get('/api/auth/login',authRoutes);
+app.use('/api/auth', authRoutes);
 
 // Start server
 app.listen(PORT, async () => {
