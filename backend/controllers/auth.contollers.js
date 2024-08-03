@@ -1,12 +1,17 @@
 
-export const login = (req, res) =>{
-    console.log('Login user');
-    alert('Login user');
+
+export const signup =async (req, res) =>{
+    try {
+        
+    } catch (error) {
+        
+    }
 
 };
 
-export const signup = (req, res) =>{
-    console.log('Signup user');
+export const login = (req, res) =>{
+    console.log('Login user');
+    alert('Login user');
 
 };
 

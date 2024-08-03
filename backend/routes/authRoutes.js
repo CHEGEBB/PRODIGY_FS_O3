@@ -4,11 +4,11 @@ import { login, logout, signup } from '../controllers/auth.contollers.js';
 const router = express.Router();
 
 
-router.get('/api/auth/login', login);
+router.post('/api/auth/login', login);
 
-router.get('/api/auth/signup', signup);
+router.post('/api/auth/signup', signup);
 
-router.get('/api/auth/logout', logout);
+router.post('/api/auth/logout', logout);
 
 
 export default router;
