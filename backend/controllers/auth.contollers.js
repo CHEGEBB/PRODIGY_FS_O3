@@ -20,12 +20,16 @@ export const signup =async (req, res) =>{
             username,
             password,
             gender,
-            profilePic: gender === 'boy'? boyProfilePic : girlProfilePic
+            profilePic: gender === 'male'? boyProfilePic : girlProfilePic
         });
         
         await newUser.save();
 
+        res.status(201).json(newUser);
+
     } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal Server Error' });
         
     }
 

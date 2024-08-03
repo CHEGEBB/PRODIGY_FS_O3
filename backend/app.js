@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +27,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Hello from the server!');
 });
+
+//auth routes
+app.get('/api/auth/login',authRoutes);
 
 // Start server
 app.listen(PORT, async () => {
