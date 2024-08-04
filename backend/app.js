@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+
+import messageRoutes from './routes/messageRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 
 // Load environment variables
@@ -30,6 +32,10 @@ app.get('/', (req, res) => {
 
 //auth routes
 app.use('/api/auth', authRoutes);
+
+//message routes
+app.use('/api/messages', messageRoutes);
+
 
 // Start server
 app.listen(PORT, async () => {
