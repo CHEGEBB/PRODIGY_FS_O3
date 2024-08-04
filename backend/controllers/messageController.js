@@ -2,7 +2,7 @@
 export const sendMessage = async (req,res)=>{
 try {
     const {message}= req.body;
-    const {id} = req.params;
+    const {id: receiverId} = req.params;
     const senderId = req.user._id;
 
   let conversation =  await Conversation.findOne({
@@ -25,6 +25,7 @@ try {
 		if (newMessage) {
 			conversation.messages.push(newMessage._id);
 		}
+    res.status(201).json(newMessage);    
 
     
 } catch (error) {
