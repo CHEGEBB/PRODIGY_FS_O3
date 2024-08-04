@@ -1,11 +1,11 @@
 {
   "name": "prodigy_fs_o3",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "server": "nodemon backend/server.js"
+    "server": "nodemon backend/app.js"
   },
-  "type":"module",
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
