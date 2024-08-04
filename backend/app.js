@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 import messageRoutes from './routes/messageRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -24,6 +25,7 @@ const connectToMongoDb = async () => {
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
 app.get('/', (req, res) => {
