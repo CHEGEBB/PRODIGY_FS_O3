@@ -31,9 +31,27 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url('https://img.freepik.com/free-photo/surreal-neon-tropical-flowers_23-2151665806.jpg?t=st=1722885061~exp=1722888661~hmac=a9081677d775192a364a5442cc30039217d022e8ffabc0c7e48bca9cc944b01e&w=740');
+  background-image: url('./images/bg2.jpg');
   background-size: cover;
   background-position: center;
+}
+.container-main{
+  width: 100%;
+  height: 80vh;
+  .overlay{
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out;
+  }
 }
 
 h1 {

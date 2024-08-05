@@ -5,6 +5,9 @@ import './index.scss'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+  <div className="container-main">
+  <div className="overlay"></div>
     <App />
+    </div>
   </React.StrictMode>,
 )
