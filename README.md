@@ -1,3 +1,4 @@
+```
 frontend/
 ├── src/
 │   ├── components/
@@ -31,3 +32,4 @@ frontend/
 │   └── App.css
 ├── index.html
 └── main.jsx
+```
