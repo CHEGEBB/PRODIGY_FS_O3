@@ -19,7 +19,7 @@ frontend/
 │   │   ├── Layout/
 │   │   │   ├── Header.jsx
 │   │   │   └── Sidebar.jsx
-│   │   └── App.jsx
+│   │── App.jsx   
 │   ├── context/
 │   │   ├── AuthContext.jsx
 │   │   └── SocketContext.jsx
