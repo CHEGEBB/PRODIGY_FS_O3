@@ -1,7 +1,7 @@
 // Import necessary models and socket utilities
 import Conversation from "../models/convoModel.js";
 import Message from "../models/messageModel.js";
-import { getReceiverSocketId, io } from "../socket/socket.js";
+import { getReceiverSocketId, io } from "../sockets/socket.js";
 
 // Controller function to send a message
 export const sendMessage = async (req, res) => {
