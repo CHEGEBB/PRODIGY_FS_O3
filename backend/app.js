@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import messageRoutes from './routes/messageRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -11,7 +13,7 @@ import userRoutes from './routes/userRoutes.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 // MongoDB connection
 const connectToMongoDb = async () => {
@@ -33,20 +35,22 @@ app.get('/', (req, res) => {
     res.send('Hello from the server!');
 });
 
-//auth routes
+// Auth routes
 app.use('/api/auth', authRoutes);
 
-//message routes
+// Message routes
 app.use('/api/messages', messageRoutes);
-app.use("/api/users",userRoutes);
+app.use('/api/users', userRoutes);
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
+// Serve static files from the React app
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.get("*", (req, res) => {
-	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
-
-
 
 // Start server
 app.listen(PORT, async () => {
