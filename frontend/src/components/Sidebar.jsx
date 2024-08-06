@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComments, faUsers, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faUsers, faCog, faSearch } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import '../sass/Sidebar.scss';
 
 const Sidebar = () => {
     const [users, setUsers] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -20,6 +21,11 @@ const Sidebar = () => {
         fetchUsers();
     }, []);
 
+    const filteredUsers = users.filter(user => 
+        user.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
@@ -32,10 +38,19 @@ const Sidebar = () => {
                     <li><FontAwesomeIcon icon={faCog} /> Settings</li>
                 </ul>
             </nav>
+            <div className="user-search">
+                <FontAwesomeIcon icon={faSearch} />
+                <input 
+                    type="text" 
+                    placeholder="Search users..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
             <div className="user-profiles">
                 <h3>User Profiles</h3>
                 <ul>
-                    {users.map((user) => (
+                    {filteredUsers.map((user) => (
                         <li key={user._id} className="user-profile">
                             <img src={user.profilePic} alt={user.fullname} />
                             <span>{user.fullname}</span>
