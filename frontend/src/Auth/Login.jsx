@@ -8,6 +8,9 @@ const LoginPage = () => {
     <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-center bg-cover bg-login-image sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 login-box">
         <h2 className="text-3xl font-extrabold text-center text-white">Login</h2>
+        <div className="welcome-message">
+          <p>Welcome back! Please log in to access your account.</p>
+        </div>
         <form className="mt-8 space-y-6">
           <div className="-space-y-px rounded-md shadow-sm user-box">
             <div>
