@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import LoginPage from './Auth/Login';
-import SignUpPage from './Auth/Signup';
+import SignUp from './Auth/Signup';
 
 function App() {
   return (
     <Router>
     <Routes>
-      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={<LoginPage />} />
       {/* <Route path="/*" element={<AuthenticatedApp />} /> */}
