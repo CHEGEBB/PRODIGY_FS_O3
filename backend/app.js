@@ -6,7 +6,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
 
-
 import messageRoutes from './routes/messageRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -32,19 +31,12 @@ const connectToMongoDb = async () => {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173', // Allow only your frontend origin
-    credentials: true, // Allow cookies if you're using them
-  }));
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
 
-// Routes
-app.get('/', (req, res) => {
-    res.send('Hello from the server!');
-});
-
-// Auth routes
+// API Routes
 app.use('/api/auth', authRoutes);
-
-// Message routes
 app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
 
@@ -52,11 +44,19 @@ app.use('/api/users', userRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+// Only serve static files and use the catch-all route in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-});
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+    });
+} else {
+    // In development, we don't want to serve the frontend from the backend
+    app.get('/', (req, res) => {
+        res.send('Hello from the server!');
+    });
+}
 
 // Start server
 app.listen(PORT, async () => {

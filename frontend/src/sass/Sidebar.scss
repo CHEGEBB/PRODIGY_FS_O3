@@ -1,85 +1,182 @@
-// Sidebar.scss
-
-$glass-background: rgba(255, 255, 255, 0.1);
-$glass-border: 1px solid rgba(255, 255, 255, 0.2);
+// Variables
 $primary-color: #4a90e2;
+$secondary-color: #34495e;
+$text-color: #ecf0f1;
+$glassmorphism-bg: rgba(255, 255, 255, 0.1);
+$glassmorphism-border: 1px solid rgba(255, 255, 255, 0.2);
+$online-color: #2ecc71;
+$offline-color: #e74c3c;
+
+// Mixins
+@mixin glassmorphism {
+  background: $glassmorphism-bg;
+  backdrop-filter: blur(10px);
+  border: $glassmorphism-border;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Styles
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  @include glassmorphism;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  transition: all 0.3s ease;
+  color: $text-color;
+
+  &:hover {
+    width: 300px;
+  }
+
+  .sidebar-header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: $primary-color;
+    }
+  }
+
+  .sidebar-nav {
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        @include flex-center;
+        justify-content: flex-start;
+
+        &:hover, &.active {
+          background: rgba($primary-color, 0.2);
+          color: $primary-color;
+        }
+
+        svg {
+          margin-right: 10px;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .user-profiles {
+    margin-top: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: $secondary-color;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba($primary-color, 0.1);
+        }
+
+        .user-avatar {
+          position: relative;
+          margin-right: 15px;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid $primary-color;
+          }
+
+          .status-indicator {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid $text-color;
+
+            &.online {
+              background-color: $online-color;
+            }
+
+            &.offline {
+              background-color: $offline-color;
+            }
+          }
+        }
+
+        .user-info {
+          flex-grow: 1;
+
+          .username {
+            font-weight: 600;
+            color: $secondary-color;
+          }
+
+          .user-status {
+            font-size: 0.8em;
+            color: $text-color;
+          }
+        }
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba($primary-color, 0.5);
+      border-radius: 3px;
+    }
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    text-align: center;
+    font-size: 0.8em;
+    color: rgba($text-color, 0.7);
+    padding: 10px 0;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 .sidebar {
-    width: 250px;
-    background: $glass-background;
-    backdrop-filter: blur(10px);
-    border-right: $glass-border;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
 
-    .sidebar-header {
-        h2 {
-            color: white;
-            margin-bottom: 30px;
-        }
-    }
-
-    .sidebar-nav {
-        ul {
-            list-style-type: none;
-            padding: 0;
-
-            li {
-                color: white;
-                margin-bottom: 20px;
-                cursor: pointer;
-                transition: color 0.3s ease;
-
-                &:hover {
-                    color: $primary-color;
-                }
-
-                svg {
-                    margin-right: 10px;
-                }
-            }
-        }
-    }
-
-    .user-profiles {
-        margin-top: 20px;
-        
-        h3 {
-            color: white;
-            margin-bottom: 10px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-            max-height: 200px;
-            overflow-y: auto;
-
-            .user-profile {
-                display: flex;
-                align-items: center;
-                margin-bottom: 10px;
-                
-                img {
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    margin-right: 10px;
-                }
-
-                span {
-                    color: white;
-                    font-size: 0.9em;
-                }
-            }
-        }
-    }
-
-    .sidebar-footer {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.8em;
-        margin-top: auto;
-    }
+.user-profile {
+  animation: fadeIn 0.3s ease-in-out;
 }

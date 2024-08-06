@@ -1,97 +1,100 @@
 import User from '../models/auth.model.js';
 import bcryptjs from 'bcryptjs';
 import generateTokenAndSetCookie from '../utils/generateToken.js';
+import axios from 'axios';
 
-export const signup =async (req, res) =>{
+export const signup = async (req, res) => {
     try {
-        const {fullname, username,password,confirmPassword,gender} = req.body;
+        const {fullname, username, password, confirmPassword, gender} = req.body;
 
         if(password !== confirmPassword) {
             return res.status(400).json({ message: 'Passwords do not match' });
         }
+
         const user = await User.findOne({ username });
         if(user) {
             return res.status(400).json({ message: 'Username already exists' });
         }
 
-        //hash the password
+        // Hash the password
         const hashedPassword = await bcryptjs.hash(password, 10);
 
+        // Generate random ID for profile picture
+        const randomId = Math.floor(Math.random() * 100) + 1;
 
-        //profile pic
-        const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-        const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+        // Get profile picture from RandomUser API
+        let profilePic;
+        try {
+            const response = await axios.get(`https://randomuser.me/api/?gender=${gender === 'male' ? 'male' : 'female'}`);
+            profilePic = response.data.results[0].picture.large;
+        } catch (error) {
+            console.error('Error fetching profile picture:', error);
+            // Fallback to a default image if RandomUser API fails
+            profilePic = gender === 'male' 
+                ? `https://randomuser.me/api/portraits/men/${randomId}.jpg`
+                : `https://randomuser.me/api/portraits/women/${randomId}.jpg`;
+        }
+
         const newUser = new User({
             fullname,
             username,
-            password:hashedPassword,
+            password: hashedPassword,
             gender,
-            profilePic: gender === 'male'? boyProfilePic : girlProfilePic
+            profilePic
         });
-        
+
         await newUser.save();
 
-        if(newUser){
-            //generate token and set cookie
-            generateTokenAndSetCookie(newUser._id,res);
+        if(newUser) {
+            // Generate token and set cookie
+            generateTokenAndSetCookie(newUser._id, res);
             res.status(201).json({
                 _id: newUser._id,
                 fullname: newUser.fullname,
                 username: newUser.username,
                 profilePic: newUser.profilePic
             });
-        }
-        else{
+        } else {
             res.status(400).json({ message: 'Failed to create user' });
         }
-
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Internal Server Error' });
-        
     }
-
 };
 
-export const login = async (req, res) =>{
+export const login = async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
         const isCorrectPassword = await bcryptjs.compare(password, user?.password || "");
-        
-        if(!user ||!isCorrectPassword){
+
+        if(!user || !isCorrectPassword){
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        
-        //generate token and set cookie
-        generateTokenAndSetCookie(user._id,res);
+
+        // Generate token and set cookie
+        generateTokenAndSetCookie(user._id, res);
         res.json({
             _id: user._id,
             fullname: user.fullname,
             username: user.username,
             profilePic: user.profilePic
         });
-        
-        
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Internal Server Error' });
-        
     }
-
 };
 
-export const logout =(req, res) =>{
+export const logout = (req, res) => {
     try {
-
-        res.cookie('jwt','',{
+        res.cookie('jwt', '', {
             maxAge: 0
         });
         res.json({ message: 'Logged out successfully' });
-        
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-}
-
+};
