@@ -1,232 +1,287 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+// Variables
+$primary-color: #c6c3c3;
+$second-color: #ffffff;
+$black-color: #000000;
+$indigo-600: #4f46e5;
+$indigo-700: #4338ca;
+$neon-blue: #00ffff;
 
-$primary-color: #4f46e5;
-$secondary-color: #818cf8;
-$text-color: #ffffff;
-
-body {
-  font-family: 'Poppins', sans-serif;
+// Mixins
+@mixin neon-glow($color) {
+  box-shadow: 0 0 5px $color,
+              0 0 10px $color,
+              0 0 20px $color,
+              0 0 40px $color;
 }
 
-// .bg-login-image {
+// Keyframes
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 
-// }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 
+      -0.2rem -0.2rem 1rem #fff,
+      0.2rem 0.2rem 1rem #fff,
+      0 0 2rem $neon-blue,
+      0 0 4rem $neon-blue,
+      0 0 6rem $neon-blue,
+      0 0 8rem $neon-blue,
+      0 0 10rem $neon-blue;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+// Global styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(45deg, #0f0f0f, #2a2a2a);
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: $neon-blue;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    text-decoration: none;
+    color: darken($neon-blue, 15%);
+    text-shadow: 0 0 5px $neon-blue;
+  }
+}
+
+// Login page styles
+.min-h-screen {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  perspective: 1000px;
+}
 
 .login-box {
-  width: 350px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  position: relative;
+  max-width: 28rem;
+  width: 100%;
+  backdrop-filter: blur(25px);
+  border: 2px solid rgba($primary-color, 0.5);
+  border-radius: 15px;
+  padding: 7.5em 2.5em 4em;
+  color: $second-color;
+  box-shadow: 0px 0px 20px rgba($neon-blue, 0.3);
+  transform-style: preserve-3d;
+  animation: float 6s ease-in-out infinite;
+  transition: all 0.5s ease;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transform: rotateX(5deg) rotateY(5deg);
+    @include neon-glow($neon-blue);
   }
 
   h2 {
-    margin-bottom: 30px;
-    color: $text-color;
-    text-align: center;
-    font-weight: 600;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba($primary-color, 0.8);
+    width: 140px;
+    height: 70px;
+    border-radius: 0 0 20px 20px;
+    font-size: 30px;
+    color: $black-color;
+    animation: neon-flicker 1.5s infinite alternate;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 30px;
+      height: 30px;
+      background: transparent;
+    }
+
+    &::before {
+      left: -30px;
+      border-top-right-radius: 50%;
+      box-shadow: 15px 0 0 0 rgba($primary-color, 0.8);
+    }
+
+    &::after {
+      right: -30px;
+      border-top-left-radius: 50%;
+      box-shadow: -15px 0 0 0 rgba($primary-color, 0.8);
+    }
   }
 
   .user-box {
     position: relative;
-    margin-bottom: 30px;
+    margin: 20px 0;
 
     input {
       width: 100%;
-      padding: 10px 0;
+      height: 55px;
       font-size: 16px;
-      color: $text-color;
-      border: none;
-      border-bottom: 1px solid $text-color;
+      background: rgba($second-color, 0.1);
+      color: $second-color;
+      padding: 0 50px 0 20px;
+      border: 2px solid $primary-color;
+      border-radius: 30px;
       outline: none;
-      background: transparent;
       transition: all 0.3s ease;
 
       &:focus {
-        border-bottom-color: $primary-color;
+        @include neon-glow($neon-blue);
+      }
+
+      &:focus ~ label,
+      &:valid ~ label {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        font-size: 14px;
+        background-color: rgba($primary-color, 0.8);
+        border-radius: 30px;
+        color: $black-color;
+        padding: 0 10px;
+        transition: all 0.3s ease;
       }
     }
 
-    label {
+    .icon {
       position: absolute;
-      top: 0;
-      left: 0;
-      padding: 10px 0;
-      font-size: 16px;
-      color: $text-color;
-      pointer-events: none;
-      transition: 0.5s;
-    }
-
-    input:focus ~ label,
-    input:valid ~ label {
-      top: -20px;
-      left: 0;
-      color: $primary-color;
-      font-size: 12px;
+      top: 18px;
+      right: 25px;
+      font-size: 20px;
+      color: $neon-blue;
+      transition: all 0.3s ease;
     }
   }
 
-  .icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: $text-color;
+  .gender-box {
+    margin-top: 20px;
+
+    h3 {
+      margin-bottom: 10px;
+      color: $neon-blue;
+    }
+
+    .form-checkbox {
+      margin-right: 8px;
+      accent-color: $neon-blue;
+    }
+  }
+
+  .text-sm {
+    margin-top: 15px;
+    font-size: 14px;
   }
 
   button[type="submit"] {
-    position: relative;
-    display: inline-block;
-    padding: 10px 20px;
-    color: $primary-color;
+    width: 100%;
+    height: 50px;
+    background: $indigo-600;
     font-size: 16px;
-    text-decoration: none;
-    text-transform: uppercase;
+    font-weight: 500;
+    color: $second-color;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
     overflow: hidden;
-    transition: 0.5s;
-    margin-top: 40px;
-    letter-spacing: 4px;
 
     &:hover {
-      background: $primary-color;
-      color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 5px $primary-color,
-                  0 0 25px $primary-color,
-                  0 0 50px $primary-color,
-                  0 0 100px $primary-color;
+      background: $indigo-700;
+      @include neon-glow($neon-blue);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba($neon-blue, 0.4),
+        transparent
+      );
+      transition: all 0.5s;
+    }
+
+    &:hover::before {
+      left: 100%;
     }
   }
 }
 
-.gender-box {
-  margin-top: 20px;
-
-  h3 {
-    color: $text-color;
-    margin-bottom: 10px;
-  }
-
-  label {
-    color: $text-color;
-    margin-right: 20px;
-    cursor: pointer;
-
-    input {
-      margin-right: 5px;
-    }
-  }
-}
-
-@media (max-width: 768px) {
+// Responsive styles
+@media only screen and (max-width: 564px) {
   .login-box {
-    padding: 30px;
+    padding: 7.5em 1.5em 4em;
   }
 }
 
-@media (max-width: 480px) {
-  .login-box {
-    padding: 20px;
-
-    h2 {
-      font-size: 24px;
+// Particle animation
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  
+  span {
+    position: absolute;
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: rgba($neon-blue, 0.5);
+    pointer-events: none;
+    filter: blur(1px);
+    
+    @for $i from 1 through 50 {
+      &:nth-child(#{$i}) {
+        $size: random(5) + 2px;
+        width: $size;
+        height: $size;
+        left: random(100) * 1%;
+        top: random(100) * 1%;
+        animation: moveParticle#{$i} #{random(20) + 10}s infinite linear;
+        opacity: random(10) * 0.1;
+      }
+      
+      @keyframes moveParticle#{$i} {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(#{random(200) - 100}px, #{random(200) - 100}px);
+        }
+      }
     }
-
-    .user-box input,
-    .user-box label {
-      font-size: 14px;
-    }
-
-    button[type="submit"] {
-      font-size: 14px;
-      padding: 8px 16px;
-    }
-  }
-}
-
-// Animations
-@keyframes btn-anim1 {
-  0% {
-    left: -100%;
-  }
-  50%,100% {
-    left: 100%;
-  }
-}
-
-@keyframes btn-anim2 {
-  0% {
-    top: -100%;
-  }
-  50%,100% {
-    top: 100%;
-  }
-}
-
-@keyframes btn-anim3 {
-  0% {
-    right: -100%;
-  }
-  50%,100% {
-    right: 100%;
-  }
-}
-
-@keyframes btn-anim4 {
-  0% {
-    bottom: -100%;
-  }
-  50%,100% {
-    bottom: 100%;
-  }
-}
-
-button[type="submit"] span {
-  position: absolute;
-  display: block;
-
-  &:nth-child(1) {
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, $primary-color);
-    animation: btn-anim1 1s linear infinite;
-  }
-
-  &:nth-child(2) {
-    top: -100%;
-    right: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, $primary-color);
-    animation: btn-anim2 1s linear infinite;
-    animation-delay: .25s;
-  }
-
-  &:nth-child(3) {
-    bottom: 0;
-    right: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(270deg, transparent, $primary-color);
-    animation: btn-anim3 1s linear infinite;
-    animation-delay: .5s;
-  }
-
-  &:nth-child(4) {
-    bottom: -100%;
-    left: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(360deg, transparent, $primary-color);
-    animation: btn-anim4 1s linear infinite;
-    animation-delay: .75s;
   }
 }
