@@ -1,0 +1,41 @@
+// Header.scss
+
+$glass-background: rgba(255, 255, 255, 0.1);
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: $glass-background;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 5px 15px;
+
+        input {
+            border: none;
+            background: transparent;
+            margin-left: 10px;
+            color: white;
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+    }
+
+    .user-actions {
+        svg {
+            color: white;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+    }
+}

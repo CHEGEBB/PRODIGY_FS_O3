@@ -1,0 +1,52 @@
+// Sidebar.scss
+
+$glass-background: rgba(255, 255, 255, 0.1);
+$glass-border: 1px solid rgba(255, 255, 255, 0.2);
+$primary-color: #4a90e2;
+
+.sidebar {
+    width: 250px;
+    background: $glass-background;
+    backdrop-filter: blur(10px);
+    border-right: $glass-border;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+    .sidebar-header {
+        h2 {
+            color: white;
+            margin-bottom: 30px;
+        }
+    }
+
+    .sidebar-nav {
+        flex-grow: 1;
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+
+            li {
+                color: white;
+                margin-bottom: 20px;
+                cursor: pointer;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: $primary-color;
+                }
+
+                svg {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .sidebar-footer {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8em;
+    }
+}

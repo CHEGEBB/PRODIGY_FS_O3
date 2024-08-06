@@ -1,3 +1,201 @@
-body{
-    background-color: #f5f5f5;
+
+$primary-color: #4a90e2;
+$secondary-color: #764ba2;
+$text-color: #ffffff;
+$glass-background: rgba(255, 255, 255, 0.1);
+$glass-border: 1px solid rgba(255, 255, 255, 0.2);
+$glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  color: $text-color;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard {
+  width: 100%;
+  height: 80vh;
+  background: $glass-background;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: $glass-shadow;
+  display: flex;
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-out;
+}
+
+// Sidebar styles
+.sidebar {
+  width: 250px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebar-header {
+    h2 {
+      color: $text-color;
+      margin-bottom: 30px;
+      animation: slideIn 0.5s ease-out;
+    }
+  }
+
+  .sidebar-nav {
+    flex-grow: 1;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        color: $text-color;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        animation: slideIn 0.5s ease-out;
+        animation-fill-mode: both;
+
+        @for $i from 1 through 3 {
+          &:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.1}s;
+          }
+        }
+
+        &:hover {
+          color: $primary-color;
+          transform: translateX(10px);
+        }
+
+        svg {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .sidebar-footer {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8em;
+    animation: fadeIn 1s ease-out;
+  }
+}
+
+// Main content styles
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+
+  .main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: $glass-background;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    animation: slideIn 0.5s ease-out;
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 5px 15px;
+      transition: all 0.3s ease;
+
+      &:focus-within {
+        box-shadow: 0 0 0 2px $primary-color;
+      }
+
+      input {
+        border: none;
+        background: transparent;
+        margin-left: 10px;
+        color: $text-color;
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+    }
+
+    .user-actions {
+      svg {
+        color: $text-color;
+        margin-left: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+          animation: pulse 0.5s infinite;
+        }
+      }
+    }
+  }
+
+  .chat-area {
+    background: $glass-background;
+    border-radius: 10px;
+    padding: 20px;
+    flex-grow: 1;
+    animation: fadeIn 0.5s ease-out;
+    
+    h1 {
+      color: $text-color;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      animation: slideIn 0.5s ease-out 0.1s;
+      animation-fill-mode: both;
+    }
+  }
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
