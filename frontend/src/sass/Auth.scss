@@ -4,14 +4,14 @@ $second-color: #ffffff;
 $black-color: #000000;
 $indigo-600: #4f46e5;
 $indigo-700: #4338ca;
-$neon-blue: #00ffff;
+$neon-blue: #4abfa6;
 
 // Mixins
 @mixin neon-glow($color) {
-  box-shadow: 0 0 5px $color,
+  box-shadow: 0 0 3px $color,
+              0 0 5px $color,
               0 0 10px $color,
-              0 0 20px $color,
-              0 0 40px $color;
+              0 0 25px $color;
 }
 
 // Keyframes
@@ -24,20 +24,6 @@ $neon-blue: #00ffff;
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
 }
-
-// @keyframes neon-flicker {
-//   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-//     text-shadow: 
-//       0 0 2rem $neon-blue,
-//       0 0 4rem $neon-blue,
-//       0 0 6rem $neon-blue,
-//       0 0 8rem $neon-blue,
-//       0 0 10rem $neon-blue;
-//   }
-//   20%, 24%, 55% {
-//     text-shadow: none;
-//   }
-// }
 
 // Global styles
 * {
@@ -76,10 +62,9 @@ a {
 
 .login-box {
   position: relative;
-  max-width: 28rem;
-  width: 100%;
+  width: 400px;
   backdrop-filter: blur(25px);
-  border: 2px solid rgba($primary-color, 0.5);
+  border: 1px solid rgba($primary-color, 0.5);
   border-radius: 15px;
   padding: 7.5em 2.5em 4em;
   color: $second-color;
