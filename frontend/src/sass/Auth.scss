@@ -150,7 +150,7 @@ a {
       background: rgba($second-color, 0.1);
       color: $second-color;
       padding: 0 50px 0 20px;
-      border: 2px solid $primary-color;
+      border: 1px solid $primary-color;
       border-radius: 30px;
       outline: none;
       transition: all 0.3s ease;
@@ -167,9 +167,10 @@ a {
         font-size: 14px;
         background-color: rgba($primary-color, 0.8);
         border-radius: 30px;
-        color: $black-color;
+        color: $celestial-blue-100;
         padding: 0 10px;
         transition: all 0.3s ease;
+        font-family: $font-rubik;
       }
     }
 
@@ -178,7 +179,7 @@ a {
       top: 18px;
       right: 25px;
       font-size: 20px;
-      color: $neon-blue;
+      color: $celestial-blue-100;
       transition: all 0.3s ease;
     }
   }
@@ -205,7 +206,7 @@ a {
   button[type="submit"] {
     width: 100%;
     height: 50px;
-    background: $indigo-600;
+    background: linear-gradient(120deg, $celestial-blue-400, $celestial-blue-600);
     font-size: 16px;
     font-weight: 500;
     color: $second-color;
@@ -217,7 +218,7 @@ a {
     overflow: hidden;
 
     &:hover {
-      background: $indigo-700;
+      background:linear-gradient(120deg, $celestial-blue-700, $celestial-blue-800);
       @include neon-glow($neon-blue);
     }
 

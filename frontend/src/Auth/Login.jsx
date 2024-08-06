@@ -27,8 +27,9 @@ const LoginPage = () => {
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-300 hover:text-indigo-500">
-                Forgot Password?
+              <a href="/signup" className="font-medium text-indigo-300 hover:text-indigo-500">
+                Dont have an account? 
+                <span className="ml-2">Sign up now</span>
               </a>
             </div>
           </div>
