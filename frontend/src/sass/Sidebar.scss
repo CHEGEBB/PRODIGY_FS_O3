@@ -77,7 +77,9 @@ $offline-color: #e74c3c;
   .user-profiles {
     margin-top: 20px;
     flex-grow: 1;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; // Add this line
 
     h3 {
       font-size: 18px;
@@ -88,6 +90,8 @@ $offline-color: #e74c3c;
     ul {
       list-style-type: none;
       padding: 0;
+      overflow-y: auto; // Change to auto
+      flex-grow: 1; // Add this line
 
       .user-profile {
         display: flex;
