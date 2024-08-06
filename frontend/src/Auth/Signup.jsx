@@ -63,9 +63,10 @@ const LoginPage = () => {
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm">
-              <a href="/login" className="font-medium text-indigo-300 hover:text-indigo-500">
-                Already Have an account? Login 
-                <span className="ml-2 text-indigo-600">here</span>
+              <a href="/login" className="font-medium text-white hover:text-red-300">
+                Already Have an account?<span>
+                  <span className="font-bold">Login here</span>
+                </span>
               </a>
             </div>
           </div>
