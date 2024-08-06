@@ -22,8 +22,6 @@ $primary-color: #4a90e2;
     }
 
     .sidebar-nav {
-        flex-grow: 1;
-
         ul {
             list-style-type: none;
             padding: 0;
@@ -45,8 +43,43 @@ $primary-color: #4a90e2;
         }
     }
 
+    .user-profiles {
+        margin-top: 20px;
+        
+        h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+
+            .user-profile {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+                
+                img {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+
+                span {
+                    color: white;
+                    font-size: 0.9em;
+                }
+            }
+        }
+    }
+
     .sidebar-footer {
         color: rgba(255, 255, 255, 0.7);
         font-size: 0.8em;
+        margin-top: auto;
     }
 }

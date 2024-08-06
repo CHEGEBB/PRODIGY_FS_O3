@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
+
 
 import messageRoutes from './routes/messageRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -29,6 +31,10 @@ const connectToMongoDb = async () => {
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:5173', // Allow only your frontend origin
+    credentials: true, // Allow cookies if you're using them
+  }));
 
 // Routes
 app.get('/', (req, res) => {
