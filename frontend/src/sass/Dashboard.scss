@@ -41,8 +41,8 @@ body {
   border-radius: 20px;
   box-shadow: $glass-shadow;
   display: flex;
-  overflow: hidden;
   animation: fadeIn 0.5s ease-out;
+  overflow-y: scroll;
 }
 
 // Sidebar styles

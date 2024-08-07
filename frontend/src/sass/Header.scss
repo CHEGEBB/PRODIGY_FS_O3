@@ -39,3 +39,67 @@ $glass-background: rgba(255, 255, 255, 0.1);
         }
     }
 }
+.main-header {
+    padding: 1rem;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .selected-user-profile {
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 0.5rem;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        flex-grow: 1;
+        max-width: 400px;
+        margin: 0 1rem;
+
+        input {
+            border: none;
+            background: transparent;
+            margin-left: 0.5rem;
+            flex-grow: 1;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    .user-actions {
+        display: flex;
+        align-items: center;
+
+        svg {
+            margin-left: 1rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+    }
+}

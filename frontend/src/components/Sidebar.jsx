@@ -1,10 +1,10 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments, faUsers, faCog, faCircle } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import '../sass/Sidebar.scss';
 
-const Sidebar = () => {
+const Sidebar = ({ onUserSelect }) => {
     const [users, setUsers] = useState([]);
     const [activeTab, setActiveTab] = useState('chats');
 
@@ -23,6 +23,10 @@ const Sidebar = () => {
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
+    };
+
+    const handleUserClick = (user) => {
+        onUserSelect(user);
     };
 
     return (
@@ -47,7 +51,11 @@ const Sidebar = () => {
                 <h3>User Profiles</h3>
                 <ul>
                     {users.map((user) => (
-                        <li key={user._id} className="user-profile">
+                        <li 
+                            key={user._id} 
+                            className="user-profile"
+                            onClick={() => handleUserClick(user)}
+                        >
                             <div className="user-avatar">
                                 <img src={user.profilePic || 'https://via.placeholder.com/30'} alt={user.fullname} />
                                 <FontAwesomeIcon icon={faCircle} className={`status-indicator ${user.isOnline ? 'online' : 'offline'}`} />
