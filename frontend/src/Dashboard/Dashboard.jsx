@@ -8,10 +8,23 @@ import MessageContainer from '../Chat/MessageContainer';
 const Dashboard = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [messages, setMessages] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        // Fetch current user data
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/users/current', { withCredentials: true });
+                setCurrentUser(response.data);
+            } catch (error) {
+                console.error('Error fetching current user:', error);
+            }
+        };
+        fetchCurrentUser();
+    }, []);
 
     const handleUserSelect = async (user) => {
         setSelectedUser(user);
-        // Fetch messages between current user and selected user
         try {
             const response = await axios.get(`http://localhost:5000/api/messages/${user._id}`, {
                 withCredentials: true
@@ -23,14 +36,18 @@ const Dashboard = () => {
     };
 
     const sendMessage = async (content) => {
-        if (!selectedUser) return;
+        if (!selectedUser || !currentUser) return;
 
         try {
             const response = await axios.post(`http://localhost:5000/api/messages/send/${selectedUser._id}`, 
                 { content },
                 { withCredentials: true }
             );
-            setMessages(prevMessages => [...prevMessages, response.data]);
+            const newMessage = {
+                ...response.data,
+                senderId: currentUser._id
+            };
+            setMessages(prevMessages => [...prevMessages, newMessage]);
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -44,7 +61,8 @@ const Dashboard = () => {
                 <section className="chat-area">
                     {selectedUser ? (
                         <MessageContainer 
-                            selectedUser={selectedUser} 
+                            selectedUser={selectedUser}
+                            currentUser={currentUser}
                             messages={messages}
                             sendMessage={sendMessage}
                         />
