@@ -4,7 +4,7 @@ import { faComments, faUsers, faCog, faCircle } from '@fortawesome/free-solid-sv
 import axios from 'axios';
 import '../sass/Sidebar.scss';
 
-const Sidebar = ({ onUserSelect }) => {
+const Sidebar = ({ onUserSelect, onlineUsers }) => {
     const [users, setUsers] = useState([]);
     const [activeTab, setActiveTab] = useState('chats');
 
@@ -12,12 +12,11 @@ const Sidebar = ({ onUserSelect }) => {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/users');
-                setUsers(response.data.map(user => ({...user, isOnline: Math.random() < 0.5})));
+                setUsers(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
         };
-
         fetchUsers();
     }, []);
 
@@ -51,14 +50,17 @@ const Sidebar = ({ onUserSelect }) => {
                 <h3>User Profiles</h3>
                 <ul>
                     {users.map((user) => (
-                        <li 
-                            key={user._id} 
+                        <li
+                            key={user._id}
                             className="user-profile"
                             onClick={() => handleUserClick(user)}
                         >
                             <div className="user-avatar">
                                 <img src={user.profilePic || 'https://via.placeholder.com/30'} alt={user.fullname} />
-                                <FontAwesomeIcon icon={faCircle} className={`status-indicator ${user.isOnline ? 'online' : 'offline'}`} />
+                                <FontAwesomeIcon 
+                                    icon={faCircle} 
+                                    className={`status-indicator ${onlineUsers.includes(user._id) ? 'online' : 'offline'}`} 
+                                />
                             </div>
                             <span>{user.fullname}</span>
                         </li>
