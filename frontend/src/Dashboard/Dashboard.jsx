@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/sidebar/Sidebar';
 import Header from '../components/Header';
 import '../sass/Dashboard.scss';
 import MessageContainer from '../Chat/MessageContainer';
@@ -76,7 +76,8 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <Sidebar onUserSelect={handleUserSelect} onlineUsers={onlineUsers} />
+        <Sidebar/>
+            {/* <Sidebar onUserSelect={handleUserSelect} onlineUsers={onlineUsers} /> */}
             <main className="main-content">
                 <Header selectedUser={selectedUser} />
                 <section className="chat-area">
