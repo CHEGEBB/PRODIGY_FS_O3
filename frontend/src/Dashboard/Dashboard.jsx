@@ -3,7 +3,7 @@ import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import '../sass/Dashboard.scss';
-import MessageContainer from '../Chat/MessageContainer';
+import MessageContainer from '../../components/Chat/MessageContainer';
 import socket from '../socket';
 
 const Dashboard = () => {
