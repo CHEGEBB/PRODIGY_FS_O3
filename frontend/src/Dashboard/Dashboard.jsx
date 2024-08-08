@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from '../components/Sidebar';
-import Header from '../components/Header';
+import Sidebar from '../components/Layout/Sidebar';
+import Header from '../components/Layout/Header';
 import '../sass/Dashboard.scss';
-import MessageContainer from '../../components/Chat/MessageContainer';
+import MessageContainer from '../components/Chat/MessageContainer';
 import socket from '../socket';
 
 const Dashboard = () => {
@@ -17,14 +17,24 @@ const Dashboard = () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/users/current', { withCredentials: true });
                 setCurrentUser(response.data);
-                // Connect socket after getting current user
                 socket.auth = { userId: response.data._id };
                 socket.connect();
             } catch (error) {
                 console.error('Error fetching current user:', error);
             }
         };
+
+        const fetchOnlineUsers = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/users');
+                setOnlineUsers(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
         fetchCurrentUser();
+        fetchOnlineUsers();
 
         // Socket event listeners
         socket.on('getOnlineUsers', (users) => {
