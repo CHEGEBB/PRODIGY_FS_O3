@@ -4,30 +4,28 @@ import ConversationList from '../components/ConversationList';
 import UserList from '../components/UserList';
 import { useAuth } from '../hooks/useAuth';
 import { getConversations, getMessages, sendMessage } from '../services/api';
-import { initSocket } from '../services/socket';
+import { initSocket, getSocket } from '../services/socket';
 
 const ChatPage = () => {
   const { user } = useAuth();
   const [conversations, setConversations] = useState([]);
-  const [currentConversation, setCurrentConversation] = useState(null);
+  const [currentReceiver, setCurrentReceiver] = useState(null);
   const [messages, setMessages] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
 
   useEffect(() => {
     if (user) {
-      const socket = initSocket(user.token);
+      const socket = initSocket();
       
       socket.on('message', (newMessage) => {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       });
 
-      socket.on('userOnline', (userData) => {
-        setOnlineUsers((prevUsers) => [...prevUsers, userData]);
+      socket.on('getOnlineUsers', (users) => {
+        setOnlineUsers(users);
       });
 
-      socket.on('userOffline', (userId) => {
-        setOnlineUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-      });
+      fetchConversations();
 
       return () => {
         socket.disconnect();
@@ -35,26 +33,22 @@ const ChatPage = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (user) {
-      fetchConversations();
-    }
-  }, [user]);
-
   const fetchConversations = async () => {
-    const data = await getConversations(user.token);
+    const data = await getConversations();
     setConversations(data);
   };
 
-  const selectConversation = async (conversationId) => {
-    setCurrentConversation(conversationId);
-    const data = await getMessages(user.token, conversationId);
+  const selectConversation = async (receiverId) => {
+    setCurrentReceiver(receiverId);
+    const data = await getMessages(receiverId);
     setMessages(data);
   };
 
   const handleSendMessage = async (content) => {
-    if (currentConversation) {
-      await sendMessage(user.token, currentConversation, content);
+    if (currentReceiver) {
+      await sendMessage(currentReceiver, content);
+      const socket = getSocket();
+      socket.emit('sendMessage', { receiverId: currentReceiver, message: content });
     }
   };
 

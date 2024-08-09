@@ -1,29 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import HomePage from './pages/HomePage';
-import ChatPage from './pages/ChatPage';
-import Login from './Auth/Login';
-import SignUp from './Auth/SignUp';
-import Navbar from './components/Navbar';
-import './index.css';
+import { Navigate, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import SignUp from "./pages/signup/SignUp";
+import { Toaster } from "react-hot-toast";
+import { useAuthContext } from "./context/AuthContext";
 
 function App() {
-  return (
-    <AuthProvider>
-      <Router>
-        <div className="app">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </div>
-      </Router>
-    </AuthProvider>
-  );
+	const { authUser } = useAuthContext();
+	return (
+		<div className='p-4 h-screen flex items-center justify-center'>
+			<Routes>
+				<Route path='/' element={authUser ? <Home /> : <Navigate to={"/login"} />} />
+				<Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
+				<Route path='/signup' element={authUser ? <Navigate to='/' /> : <SignUp />} />
+			</Routes>
+			<Toaster />
+		</div>
+	);
 }
 
 export default App;
