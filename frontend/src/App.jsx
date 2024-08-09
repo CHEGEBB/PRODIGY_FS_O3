@@ -1,34 +1,28 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import './App.scss';
-import LoginPage from './Auth/Login';
-import SignUp from './Auth/Signup';
-import Dashboard from './Dashboard/Dashboard';
-
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
-};
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import HomePage from './pages/HomePage';
+import ChatPage from './pages/ChatPage';
+import Login from './Auth/Login';
+import SignUp from './Auth/SignUp';
+import Navbar from './components/Navbar';
+import './index.css';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<LoginPage />} />
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="app">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
