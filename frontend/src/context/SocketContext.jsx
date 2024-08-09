@@ -15,21 +15,25 @@ export const SocketContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (authUser) {
-			const socket = io("https://chat-app-yt.onrender.com", {
+			// Replace the Render URL with the localhost address of your backend
+			const socket = io("http://localhost:5000", {
 				query: {
-					userId: authUser._id,
+					userId: authUser._id, // Pass user ID from auth context
 				},
+				transports: ["websocket", "polling"], // Enable necessary transports
 			});
 
 			setSocket(socket);
 
-			// socket.on() is used to listen to the events. can be used both on client and server side
+			// Listen for "getOnlineUsers" event
 			socket.on("getOnlineUsers", (users) => {
 				setOnlineUsers(users);
 			});
 
+			// Cleanup the socket connection on component unmount
 			return () => socket.close();
 		} else {
+			// Close the socket if the user logs out or authUser is null
 			if (socket) {
 				socket.close();
 				setSocket(null);

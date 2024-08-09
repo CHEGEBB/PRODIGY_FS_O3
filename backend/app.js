@@ -31,10 +31,9 @@ const connectToMongoDb = async () => {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: "http://localhost:3000",
     credentials: true,
 }));
-
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
