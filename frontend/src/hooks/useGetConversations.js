@@ -9,6 +9,7 @@ const useGetConversations = () => {
 		const getConversations = async () => {
 			setLoading(true);
 			try {
+				//this is the try catch
 				const res = await fetch("/api/users");
 				const data = await res.json();
 				if (data.error) {
