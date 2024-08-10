@@ -10,7 +10,7 @@ const useGetConversations = () => {
 			setLoading(true);
 			try {
 				//this is the try catch
-				const res = await fetch("/api/users");
+				const res = await fetch("localhost/api/users");
 				const data = await res.json();
 				if (data.error) {
 					throw new Error(data.error);
